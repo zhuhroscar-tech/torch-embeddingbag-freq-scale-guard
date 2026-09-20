@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "torch-embeddingbag-freq-scale-guard"
+version = "0.1.0"
+description = "Guards a real MPS-only torch.nn.functional.embedding_bag(..., scale_grad_by_freq=True) bug: the 1/frequency gradient scaling CPU correctly applies is silently never applied on the MPS (Apple Silicon GPU) backend, with no error or warning (pytorch/pytorch#190061)"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+authors = [{ name = "zhuhroscar-tech" }]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest", "pytest-cov"]
+torch = ["torch>=2.0"]
+
+[project.scripts]
+torch-embeddingbag-freq-scale-guard = "torch_embeddingbag_freq_scale_guard.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
